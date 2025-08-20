@@ -21,12 +21,12 @@ interface NameChange {
   color?: string;
 }
 
-interface ZamalekHistoryProps {
-  presidents?: President[];
-  nameChanges?: NameChange[];
-}
+// interface ZamalekHistoryProps {
+//   presidents?: President[];
+//   nameChanges?: NameChange[];
+// }
 
-export default function ZamalekHistory({ presidents = [], nameChanges = [] }: ZamalekHistoryProps) {
+export default function ZamalekHistory({ presidents = [], nameChanges = [] }) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   // Sample data if no props provided
@@ -240,7 +240,7 @@ export default function ZamalekHistory({ presidents = [], nameChanges = [] }: Za
     return colors[color as keyof typeof colors] || 'bg-gray-50 border-gray-200 text-gray-800';
   };
 
-  return (
+  return <>
     <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-red-50 p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
@@ -429,5 +429,5 @@ export default function ZamalekHistory({ presidents = [], nameChanges = [] }: Za
         </div>
       </div>
     </div>
-  );
+</>
 }
