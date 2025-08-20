@@ -22,11 +22,11 @@ interface Match {
   externalLinks?: Array<{ title: string; url: string }>;
 }
 
-export default function ZamalekFriendlies ({ matches = [] }: { matches?: Match[] }) {
+export default function ZamalekFriendlies () {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   
   // Sample data if no matches provided
-  const sampleMatches: Match[] = [
+  const displayMatches: Match[] = [
     {
       homeTeam: "Zamalek",
       awayTeam: "Real Madrid",
@@ -96,9 +96,6 @@ export default function ZamalekFriendlies ({ matches = [] }: { matches?: Match[]
       ]
     }
   ];
-//////////////////// Pre-obtaining data  //////////////////////////////////////
-  const displayMatches = matches.length > 0 ? matches : sampleMatches;
-  ////////////////////////////////////////////////////////////
 
   const getResultColor = (homeTeam: string, homeScore: number, awayScore: number) => {
     const isZamalekHome = homeTeam.toLowerCase().includes('zamalek');

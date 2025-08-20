@@ -22,15 +22,9 @@ interface NameChange {
   color?: string;
 }
 
-interface ZamalekHistoryProps {
-  presidents?: President[];
-  nameChanges?: NameChange[];
-}
-
-export default function ZamalekHistory({ presidents = [], nameChanges = [] }: ZamalekHistoryProps) {
+export default function ZamalekHistory() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  // Sample data if no props provided
   const defaultNameChanges: NameChange[] = [
     { name: "Kasr El-Nile Club", nameArabic: "نادي قصر النيل", period: "1911-1913", color: "blue" },
     { name: "Al-Mokhtalat Club", nameArabic: "النادي المختلط", period: "1913-1941", color: "green" },
@@ -227,10 +221,6 @@ export default function ZamalekHistory({ presidents = [], nameChanges = [] }: Za
       image: "https://via.placeholder.com/80x80/FF0000/FFFFFF?text=MA"
     }
   ];
-
-  const displayNameChanges = nameChanges.length > 0 ? nameChanges : defaultNameChanges;
-  const displayPresidents = presidents.length > 0 ? presidents : defaultPresidents;
-
   const getColorClass = (color: string) => {
     const colors = {
       blue: 'bg-blue-50 border-blue-200 text-blue-800',
@@ -270,11 +260,8 @@ export default function ZamalekHistory({ presidents = [], nameChanges = [] }: Za
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {displayNameChanges.map((nameChange, index) => (
-                <div
-                  key={index}
-                  className={`p-6 rounded-xl border-2 transition-all duration-300 hover:shadow-lg hover:scale-105 ${getColorClass(nameChange.color || 'red')}`}
-                >
+              {defaultNameChanges.map((nameChange, index) => (
+                <div key={index} className={`p-6 rounded-xl border-2 transition-all duration-300 hover:shadow-lg hover:scale-105 ${getColorClass(nameChange.color || 'red')}`}>
                   <div className="text-center">
                     <div className="mb-3">
                       <span className="inline-flex items-center justify-center w-8 h-8 bg-white rounded-full text-sm font-bold shadow-sm">
@@ -305,26 +292,16 @@ export default function ZamalekHistory({ presidents = [], nameChanges = [] }: Za
             </div>
 
             <div className="space-y-4">
-              {displayPresidents.map((president, index) => (
-                <div
-                  key={president.id}
-                  className="bg-gray-50 rounded-xl p-6 hover:bg-red-50 transition-all duration-300 hover:shadow-md border border-gray-200 hover:border-red-200"
-                >
+              {defaultPresidents.map((president, index) => (
+                <div key={president.id} className="bg-gray-50 rounded-xl p-6 hover:bg-red-50 transition-all duration-300 hover:shadow-md border border-gray-200 hover:border-red-200">
                   <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6">
+                    
                     {/* President Image */}
                     <div className="flex-shrink-0">
                       {president.image ? (
-                        <div
-                          className="w-20 h-20 rounded-full overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-200 shadow-lg"
-                          onClick={() => setSelectedImage(president.image!)}
-                        >
-                          <Image
-                            src={president.image}
-                            alt={president.nameArabic || president.name}
-                            width={80}
-                            height={80}
-                            className="w-full h-full object-cover"
-                          />
+                        <div className="w-20 h-20 rounded-full overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-200 shadow-lg"
+                          onClick={() => setSelectedImage(president.image!)}>
+                          <Image src={president.image} alt={president.nameArabic || president.name} width={80} height={80} className="w-full h-full object-cover" />
                         </div>
                       ) : (
                         <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
@@ -336,56 +313,23 @@ export default function ZamalekHistory({ presidents = [], nameChanges = [] }: Za
                     {/* President Info */}
                     <div className="flex-1 text-center md:text-right">
                       <div className="mb-2">
-                        <h3 className="text-xl font-bold text-gray-800 mb-1">
-                          {president.nameArabic || president.name}
-                        </h3>
-                        {president.nameArabic && (
-                          <p className="text-gray-600 text-sm">{president.name}</p>
-                        )}
+                        <h3 className="text-xl font-bold text-gray-800 mb-1">{president.nameArabic || president.name}</h3>
+                        {president.nameArabic && <p className="text-gray-600 text-sm">{president.name}</p>}
                       </div>
 
                       <div className="flex flex-wrap justify-center md:justify-end gap-2 mb-3">
-                        {/* Period Badge */}
-                        <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">
-                          {president.period}
-                        </span>
-
-                        {/* Term Number */}
-                        {president.termNumber && (
-                          <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-                            الفترة {president.termNumber}
-                          </span>
-                        )}
-
-                        {/* Nationality */}
-                        {president.nationality && (
-                          <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">
-                            {president.nationality}
-                          </span>
-                        )}
-
-                        {/* Founder Badge */}
-                        {president.isFounder && (
-                          <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">
-                            المؤسس
-                          </span>
-                        )}
-
-                        {/* Appointed Badge */}
-                        {president.isAppointed && (
-                          <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">
-                            معين
-                          </span>
-                        )}
+                        <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">{president.period}</span>
+                        {president.termNumber && <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">الفترة {president.termNumber}</span>}
+                        {president.nationality && <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">{president.nationality}</span>}
+                        {president.isFounder && <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">المؤسس</span>}
+                        {president.isAppointed && <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">معين</span>}
                       </div>
                     </div>
 
                     {/* President Number */}
                     <div className="flex-shrink-0">
                       <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
-                        <span className="text-white font-bold text-lg">
-                          {president.termNumber ? `${index + 1 - (displayPresidents.filter((p, i) => i < index && p.name === president.name).length)}` : index + 1}
-                        </span>
+                        <span className="text-white font-bold text-lg">{index + 1}</span>
                       </div>
                     </div>
                   </div>
@@ -393,7 +337,6 @@ export default function ZamalekHistory({ presidents = [], nameChanges = [] }: Za
               ))}
             </div>
 
-            {/* Note about appointed presidents */}
             <div className="mt-8 p-4 bg-orange-50 rounded-lg border border-orange-200">
               <p className="text-orange-800 text-sm text-center">
                 <span className="font-semibold">ملحوظة:</span> الرؤساء المعينون تم تعيينهم من قبل المجلس الأعلى للرياضة وليس بالانتخاب
@@ -404,33 +347,19 @@ export default function ZamalekHistory({ presidents = [], nameChanges = [] }: Za
 
         {/* Image Modal */}
         {selectedImage && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
-            onClick={() => setSelectedImage(null)}
-          >
+          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
+            onClick={() => setSelectedImage(null)}>
             <div className="relative w-full h-full max-w-2xl max-h-full">
-              <Image
-                src={selectedImage}
-                alt="صورة مكبرة"
-                fill
-                style={{ objectFit: "contain" }}
-                className="rounded-lg"
-              />
+              <Image src={selectedImage} alt="صورة مكبرة" fill style={{ objectFit: "contain" }} className="rounded-lg" />
             </div>
-            <button
-              className="absolute top-4 right-4 text-white text-2xl bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-75 transition-all"
-              onClick={() => setSelectedImage(null)}
-            >
-              ×
-            </button>
+            <button className="absolute top-4 right-4 text-white text-2xl bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-75 transition-all"
+              onClick={() => setSelectedImage(null)}>×</button>
           </div>
         )}
 
         {/* Footer */}
         <div className="text-center mt-16 pb-8">
-          <p className="text-gray-500">
-            موقع تاريخ الكرة المصرية - حفظ التراث الكروي المصري
-          </p>
+          <p className="text-gray-500">موقع تاريخ الكرة المصرية - حفظ التراث الكروي المصري</p>
         </div>
       </div>
     </div>
