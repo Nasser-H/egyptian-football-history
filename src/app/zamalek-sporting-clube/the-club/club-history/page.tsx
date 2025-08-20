@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Calendar, Crown, User } from 'lucide-react';
 
 interface President {
@@ -21,12 +22,12 @@ interface NameChange {
   color?: string;
 }
 
-// interface ZamalekHistoryProps {
-//   presidents?: President[];
-//   nameChanges?: NameChange[];
-// }
+interface ZamalekHistoryProps {
+  presidents?: President[];
+  nameChanges?: NameChange[];
+}
 
-export default function ZamalekHistory({ presidents = [], nameChanges = [] }) {
+export default function ZamalekHistory({ presidents = [], nameChanges = [] }: ZamalekHistoryProps) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   // Sample data if no props provided
@@ -317,9 +318,11 @@ export default function ZamalekHistory({ presidents = [], nameChanges = [] }) {
                           className="w-20 h-20 rounded-full overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-200 shadow-lg"
                           onClick={() => setSelectedImage(president.image!)}
                         >
-                          <img
+                          <Image
                             src={president.image}
                             alt={president.nameArabic || president.name}
+                            width={80}
+                            height={80}
                             className="w-full h-full object-cover"
                           />
                         </div>
@@ -401,15 +404,17 @@ export default function ZamalekHistory({ presidents = [], nameChanges = [] }) {
 
         {/* Image Modal */}
         {selectedImage && (
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
             onClick={() => setSelectedImage(null)}
           >
-            <div className="max-w-2xl max-h-full">
-              <img
+            <div className="relative w-full h-full max-w-2xl max-h-full">
+              <Image
                 src={selectedImage}
                 alt="صورة مكبرة"
-                className="max-w-full max-h-full object-contain rounded-lg"
+                fill
+                style={{ objectFit: "contain" }}
+                className="rounded-lg"
               />
             </div>
             <button

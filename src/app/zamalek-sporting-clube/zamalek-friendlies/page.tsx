@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
-import { Calendar, Trophy, Users, MapPin, Image, Link, Play, FileText, ExternalLink } from 'lucide-react';
+import Image from 'next/image';
+import { Calendar, Trophy, Users, MapPin, Image as ImageIcon, Link, Play, FileText, ExternalLink } from 'lucide-react';
 
 interface Match {
   homeTeam: string;
@@ -21,7 +22,7 @@ interface Match {
   externalLinks?: Array<{ title: string; url: string }>;
 }
 
-export default function ZamalekFriendlies ({ matches = [] }) {
+export default function ZamalekFriendlies ({ matches = [] }: { matches?: Match[] }) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   
   // Sample data if no matches provided
@@ -147,7 +148,7 @@ export default function ZamalekFriendlies ({ matches = [] }) {
                       <div className="flex items-center space-x-4">
                         <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
                           {match.homeLogo ? (
-                            <img src={match.homeLogo} alt={match.homeTeam} className="w-8 h-8 object-contain" />
+                            <Image src={match.homeLogo} alt={match.homeTeam} width={32} height={32} className="w-8 h-8 object-contain" />
                           ) : (
                             <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
                               <span className="text-white font-bold text-sm">Z</span>
@@ -179,7 +180,7 @@ export default function ZamalekFriendlies ({ matches = [] }) {
                         </div>
                         <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
                           {match.awayLogo ? (
-                            <img src={match.awayLogo} alt={match.awayTeam} className="w-8 h-8 object-contain" />
+                            <Image src={match.awayLogo} alt={match.awayTeam} width={32} height={32} className="w-8 h-8 object-contain" />
                           ) : (
                             <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center">
                               <span className="text-white font-bold text-sm">?</span>
@@ -250,7 +251,7 @@ export default function ZamalekFriendlies ({ matches = [] }) {
                     {(match.images || match.videos) && (
                       <div className="bg-purple-50 rounded-lg p-4">
                         <h4 className="font-semibold text-purple-800 mb-3 flex items-center">
-                          <Image className="w-4 h-4 mr-2" />
+                          <ImageIcon className="w-4 h-4 mr-2" />
                           الوسائط
                         </h4>
                         
@@ -265,13 +266,15 @@ export default function ZamalekFriendlies ({ matches = [] }) {
                                   className="relative group cursor-pointer rounded-lg overflow-hidden bg-gray-100 aspect-video"
                                   onClick={() => setSelectedImage(image)}
                                 >
-                                  <img
+                                  <Image
                                     src={image}
                                     alt={`صورة ${imageIndex + 1}`}
+                                    width={600}
+                                    height={400}
                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                                   />
                                   <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center">
-                                    <Image className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                                    <ImageIcon className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                                   </div>
                                 </div>
                               ))}
@@ -390,11 +393,13 @@ export default function ZamalekFriendlies ({ matches = [] }) {
             className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
             onClick={() => setSelectedImage(null)}
           >
-            <div className="max-w-4xl max-h-full">
-              <img
+            <div className="relative w-full h-full max-w-4xl max-h-full">
+              <Image
                 src={selectedImage}
                 alt="صورة مكبرة"
-                className="max-w-full max-h-full object-contain rounded-lg"
+                fill
+                style={{ objectFit: "contain" }}
+                className="rounded-lg"
               />
             </div>
             <button
