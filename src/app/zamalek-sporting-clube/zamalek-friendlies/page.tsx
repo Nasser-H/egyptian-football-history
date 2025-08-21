@@ -140,49 +140,47 @@ export default function ZamalekFriendlies () {
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-6">
                   {/* Teams and Score */}
                   <div className="flex-1">
-                    <div className="flex items-center justify-center lg:justify-start space-x-8 mb-4 lg:mb-0">
+                    <div className="flex items-center justify-between lg:justify-start space-x-1 md:space-x-8 mb-4 lg:mb-0">
                       {/* Home Team */}
-                      <div className="flex items-center space-x-4">
+                      <div className="flex items-center md:flex-row flex-col md:space-x-4">
                         <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                          {match.homeLogo ? (
-                            <Image src={match.homeLogo} alt={match.homeTeam} width={32} height={32} className="w-8 h-8 object-contain" />
-                          ) : (
+                          {match.homeLogo ? <Image src={match.homeLogo} alt={match.homeTeam} width={32} height={32} className="w-8 h-8 object-contain" />
+                           : 
                             <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
                               <span className="text-white font-bold text-sm">Z</span>
                             </div>
-                          )}
+                          }
                         </div>
                         <div className="text-center lg:text-right">
-                          <h3 className="font-bold text-lg text-gray-800">{match.homeTeam}</h3>
+                          <h3 className="font-bold text-md md:text-lg text-gray-800">{match.homeTeam}</h3>
                         </div>
                       </div>
 
                       {/* Score */}
-                      <div className={`px-6 py-3 rounded-xl border-2 ${getResultColor(match.homeTeam, match.homeScore, match.awayScore)}`}>
-                        <span className="text-2xl font-bold">
+                      <div className={`md:px-6 md:py-3 px-2 py-1 rounded-xl border-2 ${getResultColor(match.homeTeam, match.homeScore, match.awayScore)}`}>
+                        <span className="md:text-2xl text-lg font-bold">
                           {getScoreDisplay(match.homeTeam, match.homeScore, match.awayScore)}
                         </span>
                       </div>
 
                       {/* Away Team */}
-                      <div className="flex items-center space-x-4">
+                      <div className="flex md:flex-row flex-col-reverse items-center md:space-x-4">
                         <div className="text-center lg:text-left">
-                          <h3 className="font-bold text-lg text-gray-800">{match.awayTeam}</h3>
-                          {match.country && (
-                            <div className="flex items-center justify-center lg:justify-start mt-1">
+                          <h3 className="font-bold text-md md:text-lg text-gray-800">{match.awayTeam}</h3>
+                          {match.country &&
+                            <div className="flex items-center justify-center md:flex-row flex-col lg:justify-start mt-1">
                               <MapPin className="w-4 h-4 text-gray-500 mr-1" />
                               <span className="text-sm text-gray-500">({match.country})</span>
                             </div>
-                          )}
+                          }
                         </div>
                         <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
-                          {match.awayLogo ? (
-                            <Image src={match.awayLogo} alt={match.awayTeam} width={32} height={32} className="w-8 h-8 object-contain" />
-                          ) : (
+                          {match.awayLogo ?<Image src={match.awayLogo} alt={match.awayTeam} width={32} height={32} className="w-8 h-8 object-contain" />
+                           : 
                             <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center">
                               <span className="text-white font-bold text-sm">?</span>
                             </div>
-                          )}
+                          }
                         </div>
                       </div>
                     </div>
